@@ -48,12 +48,12 @@ client = mqtt.Client()
 client.username_pw_set(mqtt_username, mqtt_password)
 client.connect(mqtt_host, mqtt_port)
 client.loop_start()
-device = Device("rpipool","rpipool", "v1","m1","me")
-temp_sensor = Sensor(client, "Temperature", device, "C", icon="mdi:thermometer")
+#device = Device("rpipool","rpipool", "v1","m1","me")
+#temp_sensor = Sensor(client, "Temperature", device, "C", icon="mdi:thermometer")
 
 temp_conf = {
     "name": "Pool Temperature",
-    "state_topic": "homeassistant/sensor/rpipool/temperature/state",
+    "state_topic": "homeassistant/sensor/pool/temperature/state",
     "state_class": "measurement",
     "unit_of_measurement": "C",
     "device_class": "temperature",
@@ -61,9 +61,9 @@ temp_conf = {
     "unique_id": "pool_temperature",
     "device": {
         "identifiers": [
-            "rpipool"
+            "pool"
         ],
-        "name": "rpipool",
+        "name": "pool",
         "model": "rpi",
         "manufacturer": "me"
     },
@@ -74,13 +74,13 @@ zigbeelike={
     "availability":
         [
             {
-                "topic":"rpipool/sensor/state",
+                "topic":"pool/sensor/state",
                 "value_template":"{{ value_json.state }}"
             }
         ],
     "device":
         {
-            "identifiers":["rpipool"],
+            "identifiers":["pool"],
             "manufacturer":"me",
             "model":"rpipool",
             "name":"temperature",
@@ -94,12 +94,12 @@ zigbeelike={
     "unit_of_measurement":"C",
     "value_template":"{{ value }}"
 }
-client.publish("homeassistant/sensor/rpipool/temperature/config",json.dumps(temp_conf), 0, True)
+client.publish("homeassistant/sensor/pool/temperature/config",json.dumps(temp_conf), 0, True)
 while True:
     temp = read_temp()
     cover_state = "closed"
-    temp_sensor.send(temp)
-    client.publish("homeassistant/sensor/rpipool/temperature/state",json.dumps({temp}), 0, False)
+    #temp_sensor.send(temp)
+    client.publish("homeassistant/sensor/pool/temperature/state",json.dumps({temp}), 0, False)
     time.sleep(6)
 
 
