@@ -3,7 +3,6 @@ import logging
 import os
 
 import paho.mqtt.client as mqtt
-
 DISCOVERY_PREFIX = "homeassistant"
 
 logger = logging.getLogger(__name__)
@@ -41,6 +40,7 @@ class Sensor(Component):
             parent_device,
             unit_of_measurement,
             icon=None,
+            topic_parent_level="",
             force_update=False
     ):
         super().__init__("sensor")
@@ -52,7 +52,8 @@ class Sensor(Component):
         self.object_id = self.name.replace(" ", "_").lower()
         self.unit_of_measurement = unit_of_measurement
         self.icon = icon
-        self.topic = f"{DISCOVERY_PREFIX}/{self.component}/{self.parent_device.name}/{self.object_id}"
+        self.topic_parent_level = topic_parent_level
+        self.topic = f"{self.parent_device.name}/{self.component}/{self.topic_parent_level}/{self.object_id}"
         self._send_config()
 
     def _send_config(self):
@@ -69,7 +70,7 @@ class Sensor(Component):
             _config["icon"] = self.icon
 
         self.client.publish(
-            f"{self.topic}/config",
+            f"{DISCOVERY_PREFIX}/{self.component}/{self.parent_device.name}/{self.object_id}/config",
             json.dumps(_config),
             retain=True,
         ).wait_for_publish()
@@ -89,6 +90,36 @@ class Sensor(Component):
 
         if blocking:
             message_info.wait_for_publish()
+
+
+class Tracker:
+    def __init__(self, client: mqtt.Client, name):
+        self.client = client
+        self.name = name
+        self.unique_id = self.name.replace(" ", "_").lower()
+        self.topic = f"{DISCOVERY_PREFIX}/device_tracker/{self.unique_id}"
+        self._send_config()
+
+    def _send_config(self):
+        _config = {
+            "~": self.topic,
+            "name": self.name,
+            "unique_id": self.unique_id,
+            "stat_t": "~/state",
+            "json_attr_t": "~/attributes",
+            "payload_home": "home",
+            "payload_not_home": "not_home",
+        }
+        self.client.publish(f"{self.topic}/config", json.dumps(_config))
+
+    def send(self, latitude, longitude, gps_accuracy):
+        _payload = {
+            "latitude": latitude,
+            "longitude": longitude,
+            "gps_accuracy": gps_accuracy,
+        }
+        self.client.publish(f"{self.topic}/attributes", json.dumps(_payload))
+
 
 class Binary:
     def __init__(self, client: mqtt.Client, name, icon):
