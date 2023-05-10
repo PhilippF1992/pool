@@ -152,7 +152,7 @@ client.publish("homeassistant/sensor/pool/temperature/config",json.dumps(temp_co
 client.publish("homeassistant/binary_sensor/pool/cover_closed/config",json.dumps(cover_closed_conf), 0, True)
 client.publish("homeassistant/binary_sensor/pool/cover_opened/config",json.dumps(cover_opened_conf), 0, True)
 client.publish("homeassistant/binary_sensor/pool/cover_closing/config",json.dumps(cover_closing_conf), 0, True)
-client.publish("homeassistant/binary_sensor/pool/cover_copening/config",json.dumps(cover_opening_conf), 0, True)
+client.publish("homeassistant/binary_sensor/pool/cover_opening/config",json.dumps(cover_opening_conf), 0, True)
 
 while True:
     temp = read_temp()
@@ -165,7 +165,7 @@ while True:
     client.publish("homeassistant/binary_sensor/pool/cover_closed/state",str(cover_closed), 0, False)
     client.publish("homeassistant/binary_sensor/pool/cover_opened/state",str(cover_opened), 0, False)
     client.publish("homeassistant/binary_sensor/pool/cover_closing/state",str(cover_closing), 0, False)
-    client.publish("homeassistant/binary_sensor/pool/cover_copening/state",str(cover_opening), 0, False)
+    client.publish("homeassistant/binary_sensor/pool/cover_opening/state",str(cover_opening), 0, False)
     time.sleep(6)
 
 
