@@ -78,10 +78,10 @@ temp_conf = {
 
 cover_conf = {
     "name": "Pool Cover Closed",
-    "state_topic": "homeassistant/sensor/pool/cover_closed/state",
+    "state_topic": "homeassistant/select/pool/cover/state",
     "state_class": "binary",
     "value_template": "{{ value }}",
-    "unique_id": "pool_cover_closed",
+    "unique_id": "pool_cover",
     "options":[
         "closed",
         "opening",
@@ -108,7 +108,6 @@ while True:
     cover_closing = GPIO.input(closing_relay_pin) == GPIO.HIGH
     cover_opening = GPIO.input(opening_relay_pin) == GPIO.HIGH
     cover_state = "closed"
-    #temp_sensor.send(temp)
     client.publish("homeassistant/sensor/pool/temperature/state",str(temp), 0, False)
     client.publish("homeassistant/select/pool/cover/state",cover_state, 0, False)
     time.sleep(6)
