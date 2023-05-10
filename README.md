@@ -49,6 +49,8 @@ Controlling pool via Raspberry pi 4 & Home Assistant
 * Install python libraries
     *   ```shell 
         sudo apt-get install python3-rpi.gpio
+        sudo apt-get install python3-pip
+        pip3 install paho-mqtt
         ```
 * Clone git repo
     *   ```shell 
@@ -59,8 +61,11 @@ Controlling pool via Raspberry pi 4 & Home Assistant
         ```shell 
         cd pool
         ```
-
         *   Input relays:
             ```shell 
             python3 src/tests/test_input_relays.py 
+            ```
+        *   Input Temp:
+            ```shell 
+            python3 src/tests/test_thermometer.py 
             ```
