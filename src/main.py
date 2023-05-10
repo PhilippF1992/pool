@@ -23,6 +23,7 @@ opening_relay_pin = int(sys.argv[8])
 impuls_pin = int(sys.argv[9])
 
 GPIO.setmode (GPIO.BCM)
+GPIO.setwarnings(False)
 GPIO.setup(closed_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(opened_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(closing_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -53,7 +54,7 @@ def read_temp():
 
 def on_message(client, userdata, message):
     payload=str(message.payload.decode("utf-8"))
-    if (payload=="True" & message.topic =="homeassistant/switch/pool/cover_impuls/set"):
+    if (payload=="True" and message.topic=="homeassistant/switch/pool/cover_impuls/set"):
         client.publish("homeassistant/switch/pool/cover_impuls/state",str(True), 0, False)
         GPIO.output(impuls_pin, GPIO.HIGH)
         time.sleep(1)
