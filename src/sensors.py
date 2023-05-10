@@ -14,7 +14,7 @@ if (len(sys.argv) < 8):
 mqtt_username = str(sys.argv[1])
 mqtt_password =  str(sys.argv[2])
 mqtt_host = str(sys.argv[3])
-mqtt_port = str(sys.argv[4]) 
+mqtt_port = int(sys.argv[4]) 
 
 closed_relay_pin = int(sys.argv[5])
 opened_relay_pin = int(sys.argv[6])
