@@ -3,7 +3,6 @@ import logging
 import os
 
 import paho.mqtt.client as mqtt
-import yaml
 
 DISCOVERY_PREFIX = "homeassistant"
 
@@ -23,13 +22,6 @@ class Device(dict):
         self["sw_version"] = sw_version
         self["model"] = model
         self["manufacturer"] = manufacturer
-
-    @staticmethod
-    def from_config(config_yaml_path):
-        with open(config_yaml_path) as file:
-            device_config = yaml.safe_load(file)
-            device = Device(**device_config)
-            return device
 
 
 class Component:
