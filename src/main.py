@@ -48,7 +48,7 @@ client = mqtt.Client()
 client.username_pw_set(mqtt_username, mqtt_password)
 client.connect(mqtt_host, mqtt_port)
 client.loop_start()
-device = Device("rpi-pool","rpi-pool", "v1","m1","me")
+device = Device("rpipool","rpipool", "v1","m1","me")
 temp_sensor = Sensor(client, "Temperature", device, "°C", icon="mdi:thermometer")
 
 while True:
