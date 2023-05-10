@@ -8,7 +8,7 @@ import paho.mqtt.client as mqtt
 import glob
 import json
 
-if (len(sys.argv) < 8):
+if (len(sys.argv) < 9):
    raise  ValueError('Input arguments of mqtt auth and pins not provided')
 
 mqtt_username = str(sys.argv[1])
@@ -20,12 +20,15 @@ closed_relay_pin = int(sys.argv[5])
 opened_relay_pin = int(sys.argv[6])
 closing_relay_pin = int(sys.argv[7])
 opening_relay_pin = int(sys.argv[8])
+impuls_pin = int(sys.argv[9])
 
 GPIO.setmode (GPIO.BCM)
 GPIO.setup(closed_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(opened_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(closing_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(opening_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(impuls_pin, GPIO.OUT)
+GPIO.output(impuls_pin, GPIO.LOW)
 
 ## Temperature
 base_dir = '/sys/bus/w1/devices/'
@@ -47,14 +50,17 @@ def read_temp():
         temp_string = lines[1][equals_pos+2:]
         temp_c = float(temp_string) / 1000.0
         return temp_c
-    
-client = mqtt.Client()
 
-client.username_pw_set(mqtt_username, mqtt_password)
-client.connect(mqtt_host, mqtt_port)
-client.loop_start()
-#device = Device("rpipool","rpipool", "v1","m1","me")
-#temp_sensor = Sensor(client, "Temperature", device, "C", icon="mdi:thermometer")
+def on_message(client, userdata, message):
+    payload=str(message.payload.decode("utf-8"))
+    print("message received " ,payload)
+    print("message topic=",message.topic)
+    if (payload=="True"):
+        client.publish("homeassistant/switch/pool/cover_impuls/state",str(True), 0, False)
+        GPIO.output(impuls_pin, GPIO.HIGH)
+        time.sleep(1)
+        client.publish("homeassistant/switch/pool/cover_impuls/state",str(False), 0, False)
+        GPIO.output(impuls_pin, GPIO.LOW)
 
 temp_conf = {
     "name": "Pool Temperature",
@@ -148,11 +154,41 @@ cover_opening_conf = {
     },
     "platform": "mqtt"
 }
+cover_impuls_conf = {
+    "name": "Pool Cover Impuls",
+    "state_topic": "homeassistant/switch/pool/cover_impuls/state",
+    "command_topic": "homeassistant/switch/pool/cover_impuls/set",
+    "state_class": "binary",
+    "value_template": "{{ value }}",
+    "unique_id": "pool_cover_impuls",
+    "payload_off":"False",
+    "payload_on":"True",
+    "state_off":"False",
+    "state_on":"True",
+    "device": {
+        "identifiers": [
+            "pool"
+        ],
+        "name": "pool",
+        "model": "rpi",
+        "manufacturer": "me"
+    },
+    "platform": "mqtt"
+}
+
+client = mqtt.Client()
+client.on_message=on_message
+client.username_pw_set(mqtt_username, mqtt_password)
+client.connect(mqtt_host, mqtt_port)
+client.loop_start()
 client.publish("homeassistant/sensor/pool/temperature/config",json.dumps(temp_conf), 0, True)
 client.publish("homeassistant/binary_sensor/pool/cover_closed/config",json.dumps(cover_closed_conf), 0, True)
 client.publish("homeassistant/binary_sensor/pool/cover_opened/config",json.dumps(cover_opened_conf), 0, True)
 client.publish("homeassistant/binary_sensor/pool/cover_closing/config",json.dumps(cover_closing_conf), 0, True)
 client.publish("homeassistant/binary_sensor/pool/cover_opening/config",json.dumps(cover_opening_conf), 0, True)
+client.publish("homeassistant/switch/pool/cover_impuls/config",json.dumps(cover_impuls_conf), 0, True)
+client.publish("homeassistant/switch/pool/cover_impuls/state",str(False), 0, False)
+client.subscribe("homeassistant/switch/pool/cover_impuls/set")
 
 while True:
     temp = read_temp()
