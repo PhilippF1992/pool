@@ -82,8 +82,8 @@ closed_conf = {
     "state_class": "binary",
     "value_template": "{{ value }}",
     "unique_id": "pool_cover_closed",
-    "payload_off":"False",
-    "payload_on":"True",
+    "payload_off":False,
+    "payload_on":True,
     "device": {
         "identifiers": [
             "pool"
@@ -95,7 +95,7 @@ closed_conf = {
     "platform": "mqtt"
 }
 client.publish("homeassistant/sensor/pool/temperature/config",json.dumps(temp_conf), 0, True)
-client.publish("homeassistant/switch/pool/cover_closed/config",json.dumps(closed_conf), 0, True)
+client.publish("homeassistant/binary_sensor/pool/cover_closed/config",json.dumps(closed_conf), 0, True)
 
 while True:
     temp = read_temp()
@@ -105,7 +105,7 @@ while True:
     cover_opening = GPIO.input(opening_relay_pin) == GPIO.HIGH
     #temp_sensor.send(temp)
     client.publish("homeassistant/sensor/pool/temperature/state",str(temp), 0, False)
-    client.publish("homeassistant/switch/pool/cover_closed/state",str(cover_closed), 0, False)
+    client.publish("homeassistant/binary_sensor/pool/cover_closed/state",cover_closed, 0, False)
     time.sleep(6)
 
 
