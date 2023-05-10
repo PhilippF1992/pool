@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
+import RPi.GPIO as GPIO
 from struct import *
 from datetime import datetime
 import time
 import sys
-import subprocess
 import paho.mqtt.client as mqtt
-import os
 import glob
-from classes.mqtt_device import *
+import json
 
 if (len(sys.argv) < 8):
    raise  ValueError('Input arguments of mqtt auth and pins not provided')
@@ -21,6 +20,12 @@ closed_relay_pin = int(sys.argv[5])
 opened_relay_pin = int(sys.argv[6])
 closing_relay_pin = int(sys.argv[7])
 opening_relay_pin = int(sys.argv[8])
+
+GPIO.setmode (GPIO.BCM)
+GPIO.setup(closed_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(opened_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(closing_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(opening_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 ## Temperature
 base_dir = '/sys/bus/w1/devices/'
@@ -70,36 +75,35 @@ temp_conf = {
     "icon": "mdi:thermometer",
     "platform": "mqtt"
 }
-zigbeelike={
-    "availability":
-        [
-            {
-                "topic":"pool/sensor/state",
-                "value_template":"{{ value_json.state }}"
-            }
+
+closed_conf = {
+    "name": "Pool Cover Closed",
+    "state_topic": "homeassistant/sensor/pool/cover_closed/state",
+    "state_class": "binary",
+    "value_template": "{{ value }}",
+    "unique_id": "pool_cover_closed",
+    "device": {
+        "identifiers": [
+            "pool"
         ],
-    "device":
-        {
-            "identifiers":["pool"],
-            "manufacturer":"me",
-            "model":"rpipool",
-            "name":"temperature",
-            "sw_version":"1"
-        },
-    "device_class":"temperature",
-    "name":"pooltemperature",
-    "state_class":"measurement",
-    "state_topic":"rpipool/temperature",
-    "unique_id":"rpipool_temperature",
-    "unit_of_measurement":"C",
-    "value_template":"{{ value }}"
+        "name": "pool",
+        "model": "rpi",
+        "manufacturer": "me"
+    },
+    "platform": "mqtt"
 }
 client.publish("homeassistant/sensor/pool/temperature/config",json.dumps(temp_conf), 0, True)
+client.publish("homeassistant/sensor/pool/cover_closed/config",json.dumps(closed_conf), 0, True)
+
 while True:
     temp = read_temp()
-    cover_state = "closed"
+    cover_closed = GPIO.input(closed_relay_pin) == GPIO.HIGH
+    cover_opened = GPIO.input(opened_relay_pin) == GPIO.HIGH
+    cover_closing = GPIO.input(closing_relay_pin) == GPIO.HIGH
+    cover_opening = GPIO.input(opening_relay_pin) == GPIO.HIGH
     #temp_sensor.send(temp)
     client.publish("homeassistant/sensor/pool/temperature/state",str(temp), 0, False)
+    client.publish("homeassistant/sensor/pool/temperature/state",str(cover_closed), 0, False)
     time.sleep(6)
 
 
