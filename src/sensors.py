@@ -21,8 +21,6 @@ opened_relay_pin = int(sys.argv[6])
 closing_relay_pin = int(sys.argv[7])
 opening_relay_pin = int(sys.argv[8])
 
-os.system('modprobe w1-gpio')
-os.system('modprobe w1-therm')
 ## Temperature
 base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
