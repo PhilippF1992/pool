@@ -53,8 +53,6 @@ def read_temp():
 
 def on_message(client, userdata, message):
     payload=str(message.payload.decode("utf-8"))
-    print("message received " ,payload)
-    print("message topic=",message.topic)
     if (payload=="True"):
         client.publish("homeassistant/switch/pool/cover_impuls/state",str(True), 0, False)
         GPIO.output(impuls_pin, GPIO.HIGH)
@@ -196,7 +194,7 @@ while True:
     cover_opened = GPIO.input(opened_relay_pin) == GPIO.HIGH
     cover_closing = GPIO.input(closing_relay_pin) == GPIO.HIGH
     cover_opening = GPIO.input(opening_relay_pin) == GPIO.HIGH
-    #temp_sensor.send(temp)
+
     client.publish("homeassistant/sensor/pool/temperature/state",str(temp), 0, False)
     client.publish("homeassistant/binary_sensor/pool/cover_closed/state",str(cover_closed), 0, False)
     client.publish("homeassistant/binary_sensor/pool/cover_opened/state",str(cover_opened), 0, False)
