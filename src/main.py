@@ -57,7 +57,7 @@ def on_message(client, userdata, message):
     if (payload=="True" and message.topic=="homeassistant/switch/pool/cover_impuls/set"):
         client.publish("homeassistant/switch/pool/cover_impuls/state",str(True), 0, False)
         GPIO.output(impuls_pin, GPIO.HIGH)
-        time.sleep(1)
+        time.sleep(1.5)
         client.publish("homeassistant/switch/pool/cover_impuls/state",str(False), 0, False)
         GPIO.output(impuls_pin, GPIO.LOW)
 
@@ -201,7 +201,7 @@ while True:
     client.publish("homeassistant/binary_sensor/pool/cover_opened/state",str(cover_opened), 0, False)
     client.publish("homeassistant/binary_sensor/pool/cover_closing/state",str(cover_closing), 0, False)
     client.publish("homeassistant/binary_sensor/pool/cover_opening/state",str(cover_opening), 0, False)
-    time.sleep(6)
+    time.sleep(2)
 
 
 
