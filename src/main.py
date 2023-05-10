@@ -99,7 +99,7 @@ while True:
     temp = read_temp()
     cover_state = "closed"
     #temp_sensor.send(temp)
-    client.publish("homeassistant/sensor/pool/temperature/state",{temp}, 0, False)
+    client.publish("homeassistant/sensor/pool/temperature/state",str(temp), 0, False)
     time.sleep(6)
 
 
