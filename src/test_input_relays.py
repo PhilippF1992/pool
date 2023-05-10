@@ -16,8 +16,8 @@ while True:
     if GPIO.input(closed_relay_pin) == GPIO.HIGH:
         print("closed_relay_pin was powered!")
     if GPIO.input(opened_relay_pin) == GPIO.HIGH:
-        print("closed_relay_pin was powered!")
+        print("opened_relay_pin was powered!")
     if GPIO.input(closing_relay_pin) == GPIO.HIGH:
-        print("closed_relay_pin was powered!")
+        print("closing_relay_pin was powered!")
     if GPIO.input(opening_relay_pin) == GPIO.HIGH:
-        print("closed_relay_pin was powered!")
+        print("opening_relay_pin was powered!")
