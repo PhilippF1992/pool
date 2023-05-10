@@ -87,40 +87,10 @@ class Sensor(Component):
 
         logger.debug(f"{self.topic}: {publish_value}")
 
-        message_info = self.client.publish(f"{self.topic}/state", publish_value)
+        message_info = self.client.publish(f"{DISCOVERY_PREFIX}/{self.topic}/state", publish_value)
 
         if blocking:
             message_info.wait_for_publish()
-
-
-class Tracker:
-    def __init__(self, client: mqtt.Client, name):
-        self.client = client
-        self.name = name
-        self.unique_id = self.name.replace(" ", "_").lower()
-        self.topic = f"{DISCOVERY_PREFIX}/device_tracker/{self.unique_id}"
-        self._send_config()
-
-    def _send_config(self):
-        _config = {
-            "~": self.topic,
-            "name": self.name,
-            "unique_id": self.unique_id,
-            "stat_t": "~/state",
-            "json_attr_t": "~/attributes",
-            "payload_home": "home",
-            "payload_not_home": "not_home",
-        }
-        self.client.publish(f"{self.topic}/config", json.dumps(_config))
-
-    def send(self, latitude, longitude, gps_accuracy):
-        _payload = {
-            "latitude": latitude,
-            "longitude": longitude,
-            "gps_accuracy": gps_accuracy,
-        }
-        self.client.publish(f"{self.topic}/attributes", json.dumps(_payload))
-
 
 class Binary:
     def __init__(self, client: mqtt.Client, name, icon):
