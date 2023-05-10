@@ -69,3 +69,6 @@ Controlling pool via Raspberry pi 4 & Home Assistant
             ```shell 
             python3 src/tests/test_thermometer.py 
             ```
+
+
+python3 src/main.py mqtt Anja050518! homeassistant.local 1883 5 6 13 26
