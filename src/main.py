@@ -94,8 +94,65 @@ cover_closed_conf = {
     },
     "platform": "mqtt"
 }
+cover_opened_conf = {
+    "name": "Pool Cover Opened",
+    "state_topic": "homeassistant/binary_sensor/pool/cover_opened/state",
+    "state_class": "binary",
+    "value_template": "{{ value }}",
+    "unique_id": "pool_cover_opened",
+    "payload_off":"False",
+    "payload_on":"True",
+    "device": {
+        "identifiers": [
+            "pool"
+        ],
+        "name": "pool",
+        "model": "rpi",
+        "manufacturer": "me"
+    },
+    "platform": "mqtt"
+}
+cover_closing_conf = {
+    "name": "Pool Cover Closing",
+    "state_topic": "homeassistant/binary_sensor/pool/cover_closing/state",
+    "state_class": "binary",
+    "value_template": "{{ value }}",
+    "unique_id": "pool_cover_closing",
+    "payload_off":"False",
+    "payload_on":"True",
+    "device": {
+        "identifiers": [
+            "pool"
+        ],
+        "name": "pool",
+        "model": "rpi",
+        "manufacturer": "me"
+    },
+    "platform": "mqtt"
+}
+cover_opening_conf = {
+    "name": "Pool Cover Opening",
+    "state_topic": "homeassistant/binary_sensor/pool/cover_opening/state",
+    "state_class": "binary",
+    "value_template": "{{ value }}",
+    "unique_id": "pool_cover_opening",
+    "payload_off":"False",
+    "payload_on":"True",
+    "device": {
+        "identifiers": [
+            "pool"
+        ],
+        "name": "pool",
+        "model": "rpi",
+        "manufacturer": "me"
+    },
+    "platform": "mqtt"
+}
 client.publish("homeassistant/sensor/pool/temperature/config",json.dumps(temp_conf), 0, True)
 client.publish("homeassistant/binary_sensor/pool/cover_closed/config",json.dumps(cover_closed_conf), 0, True)
+client.publish("homeassistant/binary_sensor/pool/cover_opened/config",json.dumps(cover_opened_conf), 0, True)
+client.publish("homeassistant/binary_sensor/pool/cover_closing/config",json.dumps(cover_closing_conf), 0, True)
+client.publish("homeassistant/binary_sensor/pool/cover_copening/config",json.dumps(cover_opening_conf), 0, True)
 
 while True:
     temp = read_temp()
@@ -106,6 +163,9 @@ while True:
     #temp_sensor.send(temp)
     client.publish("homeassistant/sensor/pool/temperature/state",str(temp), 0, False)
     client.publish("homeassistant/binary_sensor/pool/cover_closed/state",str(cover_closed), 0, False)
+    client.publish("homeassistant/binary_sensor/pool/cover_opened/state",str(cover_opened), 0, False)
+    client.publish("homeassistant/binary_sensor/pool/cover_closing/state",str(cover_closing), 0, False)
+    client.publish("homeassistant/binary_sensor/pool/cover_copening/state",str(cover_opening), 0, False)
     time.sleep(6)
 
 
