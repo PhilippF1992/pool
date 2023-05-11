@@ -1,10 +1,15 @@
 import RPi.GPIO as GPIO
 import time
+import sys
+
+if (len(sys.argv) < 9):
+   raise  ValueError('Input arguments of pins not provided')
+
 # logical pins
-closed_relay_pin = 5
-opened_relay_pin = 6
-closing_relay_pin = 13
-opening_relay_pin = 26
+closed_relay_pin = int(sys.argv[1])
+opened_relay_pin = int(sys.argv[2])
+closing_relay_pin = int(sys.argv[3])
+opening_relay_pin = int(sys.argv[4])
 
 GPIO.setmode (GPIO.BCM)
 GPIO.setup(closed_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
