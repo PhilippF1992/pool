@@ -50,7 +50,8 @@ Controlling pool via Raspberry pi 4 & Home Assistant
     *   ```shell 
         sudo apt-get install python3-rpi.gpio
         sudo apt-get install python3-pip
-        pip3 install paho-mqtt
+        sudo pip3 install paho-mqtt
+        sudo pip3 install rpi-rf
         ```
 * Clone git repo
     *   ```shell 
@@ -63,7 +64,7 @@ Controlling pool via Raspberry pi 4 & Home Assistant
         ```
         *   Input relays:
             ```shell 
-            python3 src/tests/test_input_relays.py 
+            python3 src/tests/test_input_relays.py 5 6 13 26
             ```
         *   Input Temp:
             ```shell 
@@ -71,4 +72,4 @@ Controlling pool via Raspberry pi 4 & Home Assistant
             ```
 
 
-python3 src/main.py mqtt Anja050518! homeassistant.local 1883 5 6 13 26
+python3 src/main.py mqtt Anja050518! homeassistant.local 1883 5 6 13 26 27 23 24
