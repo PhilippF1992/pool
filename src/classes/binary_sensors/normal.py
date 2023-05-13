@@ -11,9 +11,9 @@ class Binary():
         self.uniq_id = uniq_id
         self.pin = pin
         if (parent == ""):
-            self.topic = "homeassistant/binary/" + self.device.name + "/" + self.uniq_id
+            self.topic = "homeassistant/binary_sensor/" + self.device.name + "/" + self.uniq_id
         else: 
-            self.topic = "homeassistant/binary/" + self.device.name + "_" + parent + "/" + self.uniq_id
+            self.topic = "homeassistant/binary_sensor/" + self.device.name + "_" + parent + "/" + self.uniq_id
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         self._send_config()
 
