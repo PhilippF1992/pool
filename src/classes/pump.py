@@ -13,7 +13,6 @@ class Pump:
     def on_message(self, message):
         payload=str(message.payload.decode("utf-8"))
         if (self.pump_level_1.uniq_id in message.topic):
-            self.pump_level_1.on_message(message)
             if (payload=="True"):
                 self.pump_level_1.set_on()
                 self.pump_level_2.set_off()
@@ -22,7 +21,6 @@ class Pump:
             else:
                 self.pump_level_1.set_off()
         if (self.pump_level_2.uniq_id in message.topic):
-            self.pump_level_2.on_message(message)
             if (payload=="True"):
                 self.pump_level_1.set_off()
                 self.pump_level_2.set_on()
@@ -31,7 +29,6 @@ class Pump:
             else:
                 self.pump_level_2.set_off()
         if (self.pump_level_3.uniq_id in message.topic):
-            self.pump_level_3.on_message(message)
             if (payload=="True"):
                 self.pump_level_1.set_off()
                 self.pump_level_2.set_off()
@@ -40,7 +37,6 @@ class Pump:
             else:
                 self.pump_level_3.set_off
         if (self.pump_level_stop.uniq_id in message.topic):
-            self.pump_level_stop.on_message(message)
             if (payload=="True"):
                 self.pump_level_1.set_off()
                 self.pump_level_2.set_off()
