@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 import sys
 
-if (len(sys.argv) < 9):
+if (len(sys.argv) < 5):
    raise  ValueError('Input arguments of pins not provided')
 
 # logical pins
