@@ -29,7 +29,7 @@ GPIO.setup(opened_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(closing_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(opening_relay_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(impuls_pin, GPIO.OUT)
-GPIO.output(impuls_pin, GPIO.LOW)
+GPIO.output(impuls_pin, GPIO.HIGH)
 
 ## Temperature
 base_dir = '/sys/bus/w1/devices/'
@@ -56,10 +56,10 @@ def on_message(client, userdata, message):
     payload=str(message.payload.decode("utf-8"))
     if (payload=="True" and message.topic=="homeassistant/switch/pool/cover_impuls/set"):
         client.publish("homeassistant/switch/pool/cover_impuls/state",str(True), 0, False)
-        GPIO.output(impuls_pin, GPIO.HIGH)
+        GPIO.output(impuls_pin, GPIO.LOW)
         time.sleep(0.5)
         client.publish("homeassistant/switch/pool/cover_impuls/state",str(False), 0, False)
-        GPIO.output(impuls_pin, GPIO.LOW)
+        GPIO.output(impuls_pin, GPIO.HIGH)
 
 temp_conf = {
     "name": "Pool Temperature",
