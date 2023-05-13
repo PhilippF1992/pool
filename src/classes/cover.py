@@ -15,10 +15,10 @@ class Cover:
         print(self.uniq_id)
     
     def send_data(self):
-        self.cover_closed.send_data
-        self.cover_opened.send_data
-        self.cover_closing.send_data
-        self.cover_opening.send_data
+        self.cover_closed.send_data()
+        self.cover_opened.send_data()
+        self.cover_closing.send_data()
+        self.cover_opening.send_data()
 
     def on_message(self, message):
         self.cover_impuls(message)
