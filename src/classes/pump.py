@@ -9,6 +9,8 @@ class Pump:
         self.pump_level_2 = Switch("Pump Level 1", "pool_level_2", device, client, gpio_pump_level_2, connect_on, uniq_id)
         self.pump_level_3 = Switch("Pump Level 1", "pool_level_3", device, client, gpio_pump_level_3, connect_on, uniq_id)
         self.pump_level_stop = Switch("Pump Level 1", "pool_level_stop", device, client, gpio_pump_level_stop, connect_on, uniq_id)
+        print("initialized")
+        print(self.uniq_id)
 
     def on_message(self, message):
         payload=str(message.payload.decode("utf-8"))

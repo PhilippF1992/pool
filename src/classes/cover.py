@@ -11,6 +11,8 @@ class Cover:
         self.cover_closing = Binary("Pool Cover Closing", "pool_cover_closing", device, client, gpio_cover_closing, uniq_id)
         self.cover_opening = Binary("Pool Cover Opening", "pool_cover_opening", device, client, gpio_cover_opening, uniq_id)
         self.cover_impuls = AutoOff("Pool Cover Impuls", "pool_cover_impuls", device, client, gpio_cover_impuls, connect_on, uniq_id)
+        print("initialized")
+        print(self.uniq_id)
     
     def send_data(self):
         self.cover_closed.send_data

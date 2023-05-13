@@ -41,6 +41,8 @@ class Switch:
         }
         self.client.publish(self.topic + "/config",json.dumps(conf), 0, True)
         self.client.subscribe(self.topic + "/set")
+        print("initialized")
+        print(self.uniq_id)
         self._send_data(False)
 
     def _send_data(self, data):

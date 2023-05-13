@@ -30,6 +30,8 @@ class DS18B20():
             "platform": "mqtt"
         }
         self.client.publish("homeassistant/sensor/" + self.device.name + "/" + self.uniq_id + "/config",json.dumps(conf), 0, True)
+        print("initialized")
+        print(self.uniq_id)
     
     def send_data(self):
         print("homeassistant/sensor/" + self.device.name + "/" + self.uniq_id + "/state")

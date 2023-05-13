@@ -30,6 +30,8 @@ class Binary():
             "platform": "mqtt"
         }
         self.client.publish(self.topic + "/config",json.dumps(conf), 0, True)
+        print("initialized")
+        print(self.uniq_id)
     
     def send_data(self):
         print(self.topic + "/state")

@@ -44,6 +44,7 @@ GPIO.setwarnings(False)
 client = mqtt.Client()
 client.username_pw_set(args.mqtt_user, args.mqtt_password)
 client.connect(args.mqtt_host, args.mqtt_port)
+client.loop_start()
 device = Device(["pool"], "pool", "v1", "rpi", "me")
 ds18b20 = DS18B20("Pool Temperature", "pool_temperature", device, client)
 cover = Cover("cover", device, client, args.gpio_cover_closed, args.gpio_cover_opened, args.gpio_cover_closing, args.gpio_cover_opening, args.gpio_cover_impuls, args.connect_on)
@@ -56,8 +57,6 @@ def on_message(client, userdata, message):
         pump.on_message(message)
 
 client.on_message=on_message
-client.loop_start()
-
 while True:
     ds18b20.send_data
     cover.send_data
