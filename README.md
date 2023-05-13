@@ -57,16 +57,3 @@ Controlling pool via Raspberry pi 4 & Home Assistant
     *   ```shell 
         git clone https://github.com/PhilippF1992/pool.git
         ```
-* Run Tests 
-    *  Enter directory
-        ```shell 
-        cd pool
-        ```
-        *   Input relays:
-            ```shell 
-            python3 src/tests/test_input_relays.py 5 6 13 26
-            ```
-        *   Input Temp:
-            ```shell 
-            python3 src/tests/test_thermometer.py 
-            ```
