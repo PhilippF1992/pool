@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-from device import *
+from .device import *
 from binary_sensors.normal import *
 from switches.auto_off import *
 

@@ -1,4 +1,4 @@
-from device import *
+from .device import *
 from switches.normal import *
 import paho.mqtt.client as mqtt
 
