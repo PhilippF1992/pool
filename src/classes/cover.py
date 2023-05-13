@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 from .device import *
-from binary_sensors.normal import *
-from switches.auto_off import *
+from .binary_sensors.normal import *
+from .switches.auto_off import *
 
 class Cover:
     def __init__(self, uniq_id, device: Device, client: mqtt.Client, gpio_cover_closed, gpio_cover_opened, gpio_cover_closing, gpio_cover_opening, gpio_cover_impuls, connect_on):

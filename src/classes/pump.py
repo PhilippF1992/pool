@@ -1,5 +1,5 @@
 from .device import *
-from switches.normal import *
+from .switches.normal import *
 import paho.mqtt.client as mqtt
 
 class Pump:
