@@ -44,6 +44,8 @@ class Switch:
         self._send_data(False)
 
     def _send_data(self, data):
+        print(self.topic + "/state")
+        print(data)
         self.client.publish(self.topic + "/state", str(data), 0, False)
 
     def set_off(self):

@@ -32,6 +32,8 @@ class Binary():
         self.client.publish(self.topic + "/config",json.dumps(conf), 0, True)
     
     def send_data(self):
+        print(self.topic + "/state")
+        print(self._read_data)
         self.client.publish(self.topic + "/state", str(self._read_data()), 0, False)
 
     def _read_data(self):

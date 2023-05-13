@@ -55,4 +55,6 @@ class AutoOff():
             GPIO.output(self.pin, self.disconnect_on)
 
     def _send_data(self, data):
+        print(self.topic + "/state")
+        print(data)
         self.client.publish(self.topic + "/state", str(data), 0, False)
