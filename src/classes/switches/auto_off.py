@@ -23,7 +23,7 @@ class AutoOff():
 
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, self.disconnect_on)
-        self._send_config
+        self._send_config()
 
     def _send_config(self):
         conf = {

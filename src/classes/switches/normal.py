@@ -1,4 +1,4 @@
-import time
+import json
 import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 from ..device import *
@@ -22,7 +22,7 @@ class Switch:
 
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, self.disconnect_on)
-        self._send_config
+        self._send_config()
 
     def _send_config(self):
         conf = {

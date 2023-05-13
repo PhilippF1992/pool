@@ -58,8 +58,8 @@ def on_message(client, userdata, message):
 
 client.on_message=on_message
 while True:
-    ds18b20.send_data
-    cover.send_data
+    ds18b20.send_data()
+    cover.send_data()
     time.sleep(2)
 
 

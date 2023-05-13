@@ -15,7 +15,7 @@ class Binary():
         else: 
             self.topic = "homeassistant/switch/" + self.device.name + "_" + parent + "/" + self.uniq_id
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        self._send_config
+        self._send_config()
 
     def _send_config(self):
         conf = {
@@ -35,7 +35,7 @@ class Binary():
     
     def send_data(self):
         print(self.topic + "/state")
-        print(self._read_data)
+        print(self._read_data())
         self.client.publish(self.topic + "/state", str(self._read_data()), 0, False)
 
     def _read_data(self):

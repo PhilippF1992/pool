@@ -14,7 +14,7 @@ class DS18B20():
         device_folder = glob.glob(base_dir + '28*')[0]
         device_file = device_folder + '/w1_slave'
         self.file = device_file
-        self._send_config
+        self._send_config()
 
     def _send_config(self):
         conf = {
@@ -35,7 +35,7 @@ class DS18B20():
     
     def send_data(self):
         print("homeassistant/sensor/" + self.device.name + "/" + self.uniq_id + "/state")
-        print(self._read_data)
+        print(self._read_data())
         self.client.publish("homeassistant/sensor/" + self.device.name + "/" + self.uniq_id + "/state", str(self._read_data()), 0, False)
 
     def _read_temp_raw(self):
