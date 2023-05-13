@@ -42,8 +42,6 @@ class AutoOff():
         }
         self.client.publish(self.topic + "/config",json.dumps(conf), 0, True)
         self.client.subscribe(self.topic + "/set")
-        print("initialized")
-        print(self.uniq_id)
         self._send_data(False)
 
     
@@ -57,6 +55,4 @@ class AutoOff():
             GPIO.output(self.pin, self.disconnect_on)
 
     def _send_data(self, data):
-        print(self.topic + "/state")
-        print(data)
         self.client.publish(self.topic + "/state", str(data), 0, False)

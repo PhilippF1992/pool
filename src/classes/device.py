@@ -7,5 +7,3 @@ class Device(dict):
         self["sw_version"] = sw_version
         self["model"] = model
         self["manufacturer"] = manufacturer
-        print("initialized")
-        print(self.name)
