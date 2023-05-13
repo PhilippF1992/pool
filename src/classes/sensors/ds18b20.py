@@ -39,7 +39,7 @@ class DS18B20():
         self.client.publish("homeassistant/sensor/" + self.device.name + "/" + self.uniq_id + "/state", str(self._read_data()), 0, False)
 
     def _read_temp_raw(self):
-        f = open(self.device_file, 'r')
+        f = open(self.file, 'r')
         lines = f.readlines()
         f.close()
         return lines
