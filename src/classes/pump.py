@@ -6,9 +6,9 @@ class Pump:
     def __init__(self, uniq_id, device: Device, client: mqtt.Client, gpio_pump_level_1, gpio_pump_level_2, gpio_pump_level_3, gpio_pump_level_stop, connect_on):
         self.uniq_id = uniq_id
         self.pump_level_1 = Switch("Pump Level 1", "pool_level_1", device, client, gpio_pump_level_1, connect_on, uniq_id)
-        self.pump_level_2 = Switch("Pump Level 1", "pool_level_2", device, client, gpio_pump_level_2, connect_on, uniq_id)
-        self.pump_level_3 = Switch("Pump Level 1", "pool_level_3", device, client, gpio_pump_level_3, connect_on, uniq_id)
-        self.pump_level_stop = Switch("Pump Level 1", "pool_level_stop", device, client, gpio_pump_level_stop, connect_on, uniq_id)
+        self.pump_level_2 = Switch("Pump Level 2", "pool_level_2", device, client, gpio_pump_level_2, connect_on, uniq_id)
+        self.pump_level_3 = Switch("Pump Level 3", "pool_level_3", device, client, gpio_pump_level_3, connect_on, uniq_id)
+        self.pump_level_stop = Switch("Pump Level 4", "pool_level_stop", device, client, gpio_pump_level_stop, connect_on, uniq_id)
         print("initialized")
         print(self.uniq_id)
 
