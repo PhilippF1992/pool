@@ -22,22 +22,22 @@ GPIO.output(pump_three, GPIO.LOW)
 GPIO.output(pump_stop, GPIO.LOW)
 
 while True:
-    if int(sys.args[5]) == 1: 
+    if int(sys.argv[5]) == 1: 
         GPIO.output(pump_two, GPIO.LOW)
         GPIO.output(pump_three, GPIO.LOW)
         GPIO.output(pump_stop, GPIO.LOW)
         GPIO.output(pump_one, GPIO.HIGH)
-    if int(sys.args[5]) == 2: 
+    if int(sys.argv[5]) == 2: 
         GPIO.output(pump_one, GPIO.LOW)
         GPIO.output(pump_three, GPIO.LOW)
         GPIO.output(pump_stop, GPIO.LOW)
         GPIO.output(pump_two, GPIO.HIGH)
-    if int(sys.args[5]) == 3: 
+    if int(sys.argv[5]) == 3: 
         GPIO.output(pump_two, GPIO.LOW)
         GPIO.output(pump_one, GPIO.LOW)
         GPIO.output(pump_stop, GPIO.LOW)
         GPIO.output(pump_three, GPIO.HIGH)
-    if int(sys.args[5]) == 0: 
+    if int(sys.argv[5]) == 0: 
         GPIO.output(pump_two, GPIO.LOW)
         GPIO.output(pump_three, GPIO.LOW)
         GPIO.output(pump_one, GPIO.LOW)
