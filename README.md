@@ -63,10 +63,11 @@ Controlling pool via Raspberry pi 4 & Home Assistant
         python3 pool/src/main.py -mqttpw TestPW
         ```
     * See /docs/raspberry-pi-pinout.jpeg to check the pinouts
+    ![alt text](https://github.com/PhilippF1992/pool/blob/main/docs/raspberry-pi-pinout.jpeg?raw=true)
 
 * Check HA if the "pool" device is now available withing Mosquitto-Broker
-    ![alt text](https://github.com/PhilippF1992/pool/blob/main/docs/DeviceInHA.jpg?raw=true)
-    ![alt text](https://github.com/PhilippF1992/pool/blob/main/docs/DeviceInHADetails.jpg?raw=true)
+    ![alt text](https://github.com/PhilippF1992/pool/blob/main/docs/DeviceInHA.png?raw=true)
+    ![alt text](https://github.com/PhilippF1992/pool/blob/main/docs/DeviceInHADetails.png?raw=true)
 
 * Modify systemd service to match your args (line 14) 
     *   ```shell 
