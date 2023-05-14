@@ -3,6 +3,8 @@
 Controlling pool via Raspberry pi 4 & Home Assistant
 ## Requirements
 * TBD
+* HomeAssistant Instance with MQTT Mosquitto Broker
+* Raspberry PI (I used rpi4)
 ## Setup:
 * Create sd-card via Imager: https://www.raspberrypi.com/software/
     * Lite OS 64-bit
@@ -54,10 +56,17 @@ Controlling pool via Raspberry pi 4 & Home Assistant
 
 * Run code manually
     *   ```shell 
+        #to see all possible args and the default values
+        python3 pool/src/main.py -h 
         #Add args as needed
         #e.g. -mqttpw to add the password to access mqtt
-        python3 pool/src/main.py 
+        python3 pool/src/main.py -mqttpw TestPW
         ```
+    * See /docs/raspberry-pi-pinout.jpeg to check the pinouts
+
+* Check HA if the "pool" device is now available withing Mosquitto-Broker
+    ![alt text](https://github.com/PhilippF1992/pool/blob/main/docs/DeviceInHA.jpg?raw=true)
+    ![alt text](https://github.com/PhilippF1992/pool/blob/main/docs/DeviceInHADetails.jpg?raw=true)
 
 * Modify systemd service to match your args (line 14) 
     *   ```shell 
@@ -66,9 +75,20 @@ Controlling pool via Raspberry pi 4 & Home Assistant
 * Make sure user systemd config is in place and add service
     *   ```shell 
         mkdir -p /home/pi/.config/systemd/user
-        cp /home/pi/pool/service/python_pool.service 
+        cp /home/pi/pool/service/python_pool.service /home/pi/.config/systemd/user/python_pool.service 
         ```
 * Enable service to run at boot
     *   ```shell 
         systemctl --user enable python_pool.service
         ```
+* Restart RPI to run service
+    *   ```shell
+        sudo reboot
+        ```
+
+* Check if everything started properly
+    * Login via ssh
+    *   ```shell
+        systemctl status --user python_pool.service
+        ```
+    
