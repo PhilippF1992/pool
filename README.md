@@ -1,10 +1,11 @@
 # Pool
 
-Controlling pool via Raspberry pi 4 & Home Assistant
+Controlling pool via Raspberry Pi, Python3, MQTT & HomeAssistant (auto-discovery)
 ## Requirements
 * TBD
 * HomeAssistant Instance with MQTT Mosquitto Broker
 * Raspberry PI (I used rpi4)
+* Wiring: TBD
 ## Setup:
 * Create sd-card via Imager: https://www.raspberrypi.com/software/
     * Lite OS 64-bit
@@ -67,7 +68,7 @@ Controlling pool via Raspberry pi 4 & Home Assistant
 
 * Check HA if the "pool" device is now available withing Mosquitto-Broker
     ![alt text](https://github.com/PhilippF1992/pool/blob/main/docs/DeviceInHA.png?raw=true)
-    ![alt text](https://github.com/PhilippF1992/pool/blob/main/docs/DeviceInHADetails.png?raw=true)
+    ![alt text](https://github.com/PhilippF1992/pool/blob/main/docs/DeviceInHADetail.png?raw=true)
 
 * Modify systemd service to match your args (line 14) 
     *   ```shell 
