@@ -2,11 +2,7 @@
 
 Controlling pool via Raspberry pi 4 & Home Assistant
 ## Requirements
-* Raspberry Pi 4
-* DS18B20 Thermometer 
-* AquaTop Poolcover
-* 4 resistors around 250 Ohm
-* 1 resistor 4,7k Ohm
+* TBD
 ## Setup:
 * Create sd-card via Imager: https://www.raspberrypi.com/software/
     * Lite OS 64-bit
@@ -20,8 +16,7 @@ Controlling pool via Raspberry pi 4 & Home Assistant
     *   ```shell 
         sudo apt upgrade -y 
         ```
-* Enable GPIO for BS18B20: https://www.circuitbasics.com/raspberry-pi-ds18b20-temperature-sensor-tutorial/
-(modprobe not needed)
+* Enable GPIO for DS18B20: 
     *   ```shell
         sudo nano /boot/config.txt
         ```
@@ -33,13 +28,13 @@ Controlling pool via Raspberry pi 4 & Home Assistant
         ```shell
         sudo reboot
         ```
-    * check (when connected)
+    * check (probe needs to be connected)
         ```shell
         lsmod | grep w1
         
-        w1_therm               28672  0
-        w1_gpio                16384  0
-        wire                   49152  2 w1_gpio,w1_therm
+        #w1_therm               28672  0
+        #w1_gpio                16384  0
+        #wire                   49152  2 w1_gpio,w1_therm
         ```
 
 * Install git
@@ -51,9 +46,29 @@ Controlling pool via Raspberry pi 4 & Home Assistant
         sudo apt-get install python3-rpi.gpio
         sudo apt-get install python3-pip
         sudo pip3 install paho-mqtt
-        sudo pip3 install rpi-rf
         ```
 * Clone git repo
     *   ```shell 
         git clone https://github.com/PhilippF1992/pool.git
+        ```
+
+* Run code manually
+    *   ```shell 
+        #Add args as needed
+        #e.g. -mqttpw to add the password to access mqtt
+        python3 pool/src/main.py 
+        ```
+
+* Modify systemd service to match your args (line 14) 
+    *   ```shell 
+        nano /home/pi/pool/service/python_pool.service
+        ```
+* Make sure user systemd config is in place and add service
+    *   ```shell 
+        mkdir -p /home/pi/.config/systemd/user
+        cp /home/pi/pool/service/python_pool.service 
+        ```
+* Enable service to run at boot
+    *   ```shell 
+        systemctl --user enable python_pool.service
         ```

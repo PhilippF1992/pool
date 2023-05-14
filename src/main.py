@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import time
 import argparse
 import paho.mqtt.client as mqtt
