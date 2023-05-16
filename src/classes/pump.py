@@ -18,26 +18,26 @@ class Pump:
         payload=str(message.payload.decode("utf-8"))
         if (self.pump_level_1.uniq_id in message.topic):
             if (payload=="True"):
-                self.pump_level_1.set_on()
                 self.pump_level_2.set_off()
                 self.pump_level_3.set_off()
                 self.pump_level_stop.set_off()
+                self.pump_level_1.set_on()
             else:
                 self.pump_level_1.set_off()
         if (self.pump_level_2.uniq_id in message.topic):
             if (payload=="True"):
                 self.pump_level_1.set_off()
-                self.pump_level_2.set_on()
                 self.pump_level_3.set_off()
                 self.pump_level_stop.set_off()
+                self.pump_level_2.set_on()
             else:
                 self.pump_level_2.set_off()
         if (self.pump_level_3.uniq_id in message.topic):
             if (payload=="True"):
                 self.pump_level_1.set_off()
                 self.pump_level_2.set_off()
-                self.pump_level_3.set_on()
                 self.pump_level_stop.set_off()
+                self.pump_level_3.set_on()
             else:
                 self.pump_level_3.set_off
         if (self.pump_level_stop.uniq_id in message.topic):
