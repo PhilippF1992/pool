@@ -25,7 +25,7 @@ Controlling pool via Raspberry Pi, Python3, MQTT & HomeAssistant (auto-discovery
         ```
     * add to the bottom of the file:
         ```shell
-        dtoverlay=w1-gpio,gpiopin=17
+        dtoverlay=w1-gpio,gpiopin=3
         ```
     * reboot
         ```shell

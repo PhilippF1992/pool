@@ -3,9 +3,9 @@
 sudo apt update
 sudo apt upgrade -y
 sudo apt install git -y
-sudo apt install python3-rpi.gpio
-sudo apt install python3-pip
-sudo apt install python3-systemd
+sudo apt install python3-rpi.gpio -y
+sudo apt install python3-pip -y
+sudo apt install python3-systemd -y 
 sudo pip3 install paho-mqtt
 
 sudo useradd -r -s /bin/false python_pool
