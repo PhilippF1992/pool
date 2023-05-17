@@ -26,8 +26,8 @@ parser.add_argument('-mqtthost', dest='mqtt_host', type=str, default="homeassist
                     help="MQTT Host (Default: homeassistant.local)")
 parser.add_argument('-mqttport', dest='mqtt_port', type=int, default=1883,
                     help="MQTT Port (Default: 1883)")
-parser.add_argument('-connect_on', dest='connect_on', type=any, default=GPIO.LOW,
-                    help="Connect on (Default: GPIO.LOW)")
+parser.add_argument('-connect_on', dest='connect_on', type=any, default=GPIO.HIGH,
+                    help="Connect on (Default: GPIO.HIGH)")
 parser.add_argument('-gpl1', dest='gpio_pump_level_1', type=int, default=6,
                     help="GPIO Pump Level 1(Default: 6)")
 parser.add_argument('-gpl2', dest='gpio_pump_level_2', type=int, default=13,
