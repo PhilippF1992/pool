@@ -1,3 +1,4 @@
+import time
 from .device import *
 from .switches.normal import *
 import paho.mqtt.client as mqtt
@@ -21,6 +22,7 @@ class Pump:
                 self.pump_level_2.set_off()
                 self.pump_level_3.set_off()
                 self.pump_level_stop.set_off()
+                time.sleep(0.5)
                 self.pump_level_1.set_on()
             else:
                 self.pump_level_1.set_off()
@@ -29,6 +31,7 @@ class Pump:
                 self.pump_level_1.set_off()
                 self.pump_level_3.set_off()
                 self.pump_level_stop.set_off()
+                time.sleep(0.5)
                 self.pump_level_2.set_on()
             else:
                 self.pump_level_2.set_off()
@@ -37,6 +40,7 @@ class Pump:
                 self.pump_level_1.set_off()
                 self.pump_level_2.set_off()
                 self.pump_level_stop.set_off()
+                time.sleep(0.5)
                 self.pump_level_3.set_on()
             else:
                 self.pump_level_3.set_off
@@ -45,6 +49,7 @@ class Pump:
                 self.pump_level_1.set_off()
                 self.pump_level_2.set_off()
                 self.pump_level_3.set_off()
+                time.sleep(0.5)
                 self.pump_level_stop.set_on()
             else:
                 self.pump_level_stop.set_off()
