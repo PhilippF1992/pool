@@ -9,7 +9,6 @@ sudo apt install python3-systemd -y
 sudo pip3 install paho-mqtt
 
 sudo useradd -r -s /bin/false python_pool
-
 sudo adduser python_pool gpio
 
 sudo bash -c "echo 'dtoverlay=w1-gpio,gpiopin=3' >> /boot/config.txt"
