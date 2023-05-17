@@ -74,14 +74,13 @@ Controlling pool via Raspberry Pi, Python3, MQTT & HomeAssistant (auto-discovery
     *   ```shell 
         nano /home/pi/pool/service/python_pool.service
         ```
-* Make sure user systemd config is in place and add service
+* Make add service to systemd 
     *   ```shell 
-        mkdir -p /home/pi/.config/systemd/user
-        cp /home/pi/pool/service/python_pool.service /home/pi/.config/systemd/user/python_pool.service 
+        sudo cp /home/pi/pool/service/python_pool.service /etc/systemd/system/python_pool.service 
         ```
 * Enable service to run at boot
     *   ```shell 
-        systemctl --user enable python_pool.service
+        systemctl enable python_pool.service
         ```
 * Restart RPI to run service
     *   ```shell

@@ -1,5 +1,6 @@
 import time
 import argparse
+import systemd.daemon
 import paho.mqtt.client as mqtt
 from classes.device import *
 from classes.cover import *
@@ -56,6 +57,7 @@ def on_message(client, userdata, message):
         pump.on_message(message)
 
 client.on_message=on_message
+systemd.daemon.notify('READY=1')
 while True:
     ds18b20.send_data()
     cover.send_data()
