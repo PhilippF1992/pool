@@ -11,7 +11,7 @@ Description=Python Service to manage your pool via MQTT and HomeAssistant
 
 # Command to execute when the service is started
 # Add args as required
-ExecStart=/usr/bin/python3 /pool/src/main.py 
+ExecStart=/usr/bin/python3 /usr/local/lib/pool/src/main.py 
 
 # Disable Python's buffering of STDOUT and STDERR, so that output from the
 # service shows up immediately in systemd's logs
@@ -22,7 +22,7 @@ Restart=on-failure
 
 # Our service will not notify systemd once it is up and running
 Type=notify
-User=python_pool
+#User=python_pool
 
 
 

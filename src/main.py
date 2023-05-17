@@ -8,16 +8,16 @@ from classes.pump import *
 from classes.sensors.ds18b20 import *
 
 parser = argparse.ArgumentParser(description='Controll your Pool via MQTT and HA')
-parser.add_argument('-gcc', dest='gpio_cover_closed', type=int, default=5,
-                    help="GPIO pin Cover Closed(Default: 5)")
-parser.add_argument('-gco', dest='gpio_cover_opened', type=int, default=6,
-                    help="GPIO pin Cover Opened(Default: 6)")
-parser.add_argument('-gccg', dest='gpio_cover_closing', type=int, default=13,
-                    help="GPIO pin Cover Closing(Default: 13)")
-parser.add_argument('-gcog', dest='gpio_cover_opening', type=int, default=26,
-                    help="GPIO pin Cover Opening(Default: 26)")
-parser.add_argument('-gci', dest='gpio_cover_impuls', type=int, default=27,
-                    help="GPIO pin Cover Impuls(Default: 27)")
+parser.add_argument('-gcc', dest='gpio_cover_closed', type=int, default=22,
+                    help="GPIO pin Cover Closed(Default: 22)")
+parser.add_argument('-gco', dest='gpio_cover_opened', type=int, default=10,
+                    help="GPIO pin Cover Opened(Default: 10)")
+parser.add_argument('-gccg', dest='gpio_cover_closing', type=int, default=9,
+                    help="GPIO pin Cover Closing(Default: 9)")
+parser.add_argument('-gcog', dest='gpio_cover_opening', type=int, default=11,
+                    help="GPIO pin Cover Opening(Default: 11)")
+parser.add_argument('-gci', dest='gpio_cover_impuls', type=int, default=5,
+                    help="GPIO pin Cover Impuls(Default: 5)")
 parser.add_argument('-mqttuser', dest='mqtt_user', type=str, default="mqtt",
                     help="MQTT Username (Default: mqtt)")
 parser.add_argument('-mqttpw', dest='mqtt_password', type=str, default="",
@@ -28,14 +28,14 @@ parser.add_argument('-mqttport', dest='mqtt_port', type=int, default=1883,
                     help="MQTT Port (Default: 1883)")
 parser.add_argument('-connect_on', dest='connect_on', type=any, default=GPIO.LOW,
                     help="Connect on (Default: GPIO.LOW)")
-parser.add_argument('-gpl1', dest='gpio_pump_level_1', type=int, default=12,
-                    help="GPIO Pump Level 1(Default: 12)")
-parser.add_argument('-gpl2', dest='gpio_pump_level_2', type=int, default=16,
-                    help="GPIO Pump Level 2(Default: 16)")
-parser.add_argument('-gpl3', dest='gpio_pump_level_3', type=int, default=20,
-                    help="GPIO Pump Level 3(Default: 20)")
-parser.add_argument('-gplstop', dest='gpio_pump_level_stop', type=int, default=21,
-                    help="GPIO Pump Level Stop(Default: 21)")
+parser.add_argument('-gpl1', dest='gpio_pump_level_1', type=int, default=6,
+                    help="GPIO Pump Level 1(Default: 6)")
+parser.add_argument('-gpl2', dest='gpio_pump_level_2', type=int, default=13,
+                    help="GPIO Pump Level 2(Default: 13)")
+parser.add_argument('-gpl3', dest='gpio_pump_level_3', type=int, default=19,
+                    help="GPIO Pump Level 3(Default: 19)")
+parser.add_argument('-gplstop', dest='gpio_pump_level_stop', type=int, default=26,
+                    help="GPIO Pump Level Stop(Default: 26ß)")
 args = parser.parse_args()
 
 GPIO.setmode (GPIO.BCM)

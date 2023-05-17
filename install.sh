@@ -3,24 +3,27 @@
 sudo apt update
 sudo apt upgrade -y
 sudo apt install git -y
-sudo apt-get install python3-rpi.gpio
-sudo apt-get install python3-pip
+sudo apt install python3-rpi.gpio
+sudo apt install python3-pip
+sudo apt install python3-systemd
 sudo pip3 install paho-mqtt
 
 sudo useradd -r -s /bin/false python_pool
 
-sudo bash -c "echo 'dtoverlay=w1-gpio,gpiopin=17' >> /boot/config.txt"
+sudo adduser python_pool gpio
+
+sudo bash -c "echo 'dtoverlay=w1-gpio,gpiopin=3' >> /boot/config.txt"
 
 git clone https://github.com/PhilippF1992/pool.git
 
 sudo cp -r pool /usr/local/lib/
 
-sudo chown root:root /usr/local/lib/pool/
+sudo chown root:root /usr/local/lib/pool/src/main.py
 
-sudo chmod 644 /usr/local/lib/pool/
+sudo chmod 644 /usr/local/lib/pool/src/main.py
 
 sudo cp /usr/local/lib/pool/service/python_pool.service /etc/systemd/system/python_pool.service 
 
 sudo systemctl enable python_pool.service
 
-nano /etc/systemd/system/python_pool.service 
+sudo nano /etc/systemd/system/python_pool.service 
