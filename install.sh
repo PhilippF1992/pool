@@ -23,6 +23,4 @@ sudo chmod 644 /usr/local/lib/pool/src/main.py
 
 sudo cp /usr/local/lib/pool/service/python_pool.service /etc/systemd/system/python_pool.service 
 
-sudo systemctl enable python_pool.service
-
 sudo nano /etc/systemd/system/python_pool.service 

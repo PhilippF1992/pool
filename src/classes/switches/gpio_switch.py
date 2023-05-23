@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 from ..device import *
 
-class Switch:
+class GPIO_Switch:
     def __init__(self, name, uniq_id, device: Device, client: mqtt.Client, pin, connect_on, parent= ""):
         self.name = name
         self.device = device
@@ -55,3 +55,12 @@ class Switch:
 
     def subscribe(self):
         self.client.subscribe(self.topic + "/set")
+
+    def on_message(self, client, userdata, message):
+        if (message.topic == self.topic + "/set"):
+            payload=str(message.payload.decode("utf-8"))
+            if (payload == "True"):
+                self.set_on
+            else: 
+                self.set_off
+

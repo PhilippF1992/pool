@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 from ..device import *
 
-class Binary():
+class GPIO_Binary_Sensor():
     def __init__(self, name, uniq_id, device: Device, client: mqtt.Client, pin, parent= ""):
         self.name = name
         self.device = device
