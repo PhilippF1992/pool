@@ -26,3 +26,6 @@ class Cover:
                 self.cover_impuls.set_on()
                 time.sleep(0.5)
                 self.cover_impuls.set_off()
+
+    def subscribe(self):
+        self.cover_impuls.subscribe()

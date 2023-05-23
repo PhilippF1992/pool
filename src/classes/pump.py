@@ -15,6 +15,12 @@ class Pump:
         self.pump_level_3.set_off()
         self.pump_level_stop.set_off()
 
+    def subscribe(self):
+        self.pump_level_1.subscribe()
+        self.pump_level_2.subscribe()
+        self.pump_level_3.subscribe()
+        self.pump_level_stop.subscribe()
+
     def on_message(self, message):
         payload=str(message.payload.decode("utf-8"))
         if (self.pump_level_1.uniq_id in message.topic):

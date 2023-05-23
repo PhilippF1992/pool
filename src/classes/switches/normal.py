@@ -40,7 +40,6 @@ class Switch:
             "platform": "mqtt"
         }
         self.client.publish(self.topic + "/config",json.dumps(conf), 0, True)
-        self.client.subscribe(self.topic + "/set")
         self._send_data(False)
 
     def _send_data(self, data):
@@ -53,3 +52,6 @@ class Switch:
     def set_on(self):
         self._send_data(True)
         GPIO.output(self.pin, self.connect_on)
+
+    def subscribe(self):
+        self.client.subscribe(self.topic + "/set")
