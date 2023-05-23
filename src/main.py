@@ -72,9 +72,8 @@ client.connect(args.mqtt_host, args.mqtt_port)
 client.loop_start()
 systemd.daemon.notify('READY=1')
 while True:
-    if connected:
-        ds18b20.send_data()
-        cover.send_data()
+    ds18b20.send_data()
+    cover.send_data()
     time.sleep(2)
 
 
