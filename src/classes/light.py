@@ -71,6 +71,8 @@ class Light:
         self.brightness = int(response[71:72], 16) // 4
         self.speed = int(response[70:71], 16) - 4
         self.state = int(response[33:34])
+        print("Current State")
+
 
     def send_command(self, command: dict):
         message = json.dumps(command)
@@ -81,6 +83,7 @@ class Light:
         self._send_config_speed()
         self._send_config_brightness()
         self._send_config_state()
+        print("Send configs")
 
     def _send_config_color(self):
         conf = {
@@ -154,23 +157,23 @@ class Light:
     def _send_data_state(self, state):
         self.client.publish(self.state_topic + "/state", str(state_map.get(state, "Error")), 0, False)
 
-    def set_state(self, state):
+    def _set_state(self, state):
         self.state = state
         self.send_command({"sprj":state})
         self._send_data_state(state)
 
-    def set_color(self, color):
+    def _set_color(self, color):
         self.color = color
         self.send_command({"prcn":color})
         self._send_data_color(color)
 
-    def set_brightness(self, brightness):
+    def _set_brightness(self, brightness):
         self.brightness = brightness
         self.send_command({"plum":brightness})
         self._send_data_brightness(brightness)
         self.set_color(self.color)
 
-    def set_speed(self, speed):
+    def _set_speed(self, speed):
         self.speed = speed
         self.send_command({"pspd":speed})
         self._send_data_speed(speed)
@@ -181,6 +184,7 @@ class Light:
         self.client.subscribe(self.color_topic + "/select")
         self.client.subscribe(self.speed_topic + "/select")
         self.client.subscribe(self.brightness_topic + "/select")
+        print("Subscribe")
 
     def _translate_back(self,options, option):
         for key, value in options.items():
@@ -189,6 +193,7 @@ class Light:
 
     def on_message(self, message):
         payload=str(message.payload.decode("utf-8"))
+        print(payload)
         if("state" in message.topic):
             new_state = self._translate_back(state_map, payload)
             self.set_state(new_state)
@@ -201,3 +206,4 @@ class Light:
         if("speed" in message.topic):
             new_speed = self._translate_back(state_map, payload)
             self.set_state(new_speed)
+        print("On Message")
