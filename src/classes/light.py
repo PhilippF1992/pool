@@ -54,7 +54,7 @@ class Light:
         self.brightness_topic = "homeassistant/select/" + self.device.name + "_" + uniq_id + "/" + "brightness"
         self.speed_topic = "homeassistant/select/" + self.device.name + "_" + uniq_id + "/" + "speed"
         self.state_topic = "homeassistant/switch/" + self.device.name + "_" + uniq_id + "/" + "state"
-        self.get_current_state()
+        self.set_current_state()
         self.send_config()
 
     def send_tcp_message(self, message = ""):
@@ -65,10 +65,10 @@ class Light:
             response = sock.recv(1024).decode()
             return response
         
-    def get_current_state(self):
+    def set_current_state(self):
         response = self.send_tcp_message()
         speed = int(response[70:71], 16) - 4
-        if speed < 0: 
+        if speed <= 0: 
             self.speed = 0
         else:
             self.speed = speed 
@@ -209,4 +209,4 @@ class Light:
             self._set_brightness(new_brightness)
         if("speed" in message.topic):
             new_speed = self._translate_back(speed_map, payload)
-            self._set_state(new_speed)
+            self._set_speed(new_speed)
