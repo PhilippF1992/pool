@@ -5,6 +5,7 @@ import paho.mqtt.client as mqtt
 from classes.device import *
 from classes.cover import *
 from classes.pump import *
+from classes.light import *
 from classes.sensors.ds18b20 import *
 
 parser = argparse.ArgumentParser(description='Controll your Pool via MQTT and HA')
@@ -35,7 +36,11 @@ parser.add_argument('-gpl2', dest='gpio_pump_level_2', type=int, default=13,
 parser.add_argument('-gpl3', dest='gpio_pump_level_3', type=int, default=19,
                     help="GPIO Pump Level 3(Default: 19)")
 parser.add_argument('-gplstop', dest='gpio_pump_level_stop', type=int, default=26,
-                    help="GPIO Pump Level Stop(Default: 26ß)")
+                    help="GPIO Pump Level Stop(Default: 26)")
+parser.add_argument('-lightip', dest='light_ip', type=str, default="199.2.22.59",
+                    help="Brio WIL Light IP(Default: 199.2.22.59)")
+parser.add_argument('-lightport', dest='light_port', type=int, default=30302,
+                    help="Brio WIL Light Port(Default: 30302)")
 args = parser.parse_args()
 
 GPIO.setmode (GPIO.BCM)
@@ -49,16 +54,20 @@ device = Device(["pool"], "pool", "v1", "rpi", "me")
 ds18b20 = DS18B20("Pool Temperature", "pool_temperature", device, client)
 cover = Cover("cover", device, client, args.gpio_cover_closed, args.gpio_cover_opened, args.gpio_cover_closing, args.gpio_cover_opening, args.gpio_cover_impuls, args.connect_on)
 pump = Pump("pump", device, client, args.gpio_pump_level_1, args.gpio_pump_level_2, args.gpio_pump_level_3, args.gpio_pump_level_stop, args.connect_on)
+light = Light("light", device, client, args.light_ip, args.light_port)
 connected = False
 def on_message(client, userdata, message):
     if (cover.uniq_id in message.topic):
         cover.on_message(message)
     if (pump.uniq_id in message.topic):
         pump.on_message(message)
+    if (light.uniq_id in message.topic):
+        pump.on_message(message)
 
 def on_connect(client, userdata, flags, rc):
     cover.subscribe()
     pump.subscribe()
+    light.subscribe()
     connected = True
 
 def on_disconnect(client, userdata, rc):
