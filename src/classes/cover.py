@@ -19,6 +19,13 @@ class Cover:
         self.cover_closing.send_data()
         self.cover_opening.send_data()
 
+    def send_config(self):
+        self.cover_closed.send_config()
+        self.cover_opened.send_config()
+        self.cover_closing.send_config()
+        self.cover_opening.send_config()
+        self.cover_impuls.send_config()
+
     def on_message(self, message):
         payload=str(message.payload.decode("utf-8"))
         if (self.cover_impuls.uniq_id in message.topic):

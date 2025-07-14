@@ -15,9 +15,9 @@ class GPIO_Binary_Sensor():
         else: 
             self.topic = "homeassistant/binary_sensor/" + self.device.name + "_" + parent + "/" + self.uniq_id
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        self._send_config()
+        self.send_config()
 
-    def _send_config(self):
+    def send_config(self):
         conf = {
             "name": self.name,
             "state_topic": self.topic + "/state",
@@ -30,7 +30,8 @@ class GPIO_Binary_Sensor():
             "platform": "mqtt"
         }
         self.client.publish(self.topic + "/config",json.dumps(conf), 0, True)
-    
+        self.send_data()
+        
     def send_data(self):
         self.client.publish(self.topic + "/state", str(self._read_data()), 0, False)
 

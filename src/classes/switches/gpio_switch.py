@@ -22,9 +22,9 @@ class GPIO_Switch:
 
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, self.disconnect_on)
-        self._send_config()
+        self.send_config()
 
-    def _send_config(self):
+    def send_config(self):
         conf = {
             "name": self.name,
             "state_topic": self.topic + "/state",

@@ -55,7 +55,7 @@ class Light:
         self.speed_topic = "homeassistant/select/" + self.device.name + "_" + uniq_id + "/" + "speed"
         self.state_topic = "homeassistant/switch/" + self.device.name + "_" + uniq_id + "/" + "state"
         self.get_current_state()
-        self._send_configs()
+        self.send_config()
 
     def send_tcp_message(self, message = ""):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
@@ -81,7 +81,7 @@ class Light:
         message = json.dumps(command)
         self.send_tcp_message(message)
 
-    def _send_configs(self):
+    def send_config(self):
         self._send_config_color()
         self._send_config_speed()
         self._send_config_brightness()

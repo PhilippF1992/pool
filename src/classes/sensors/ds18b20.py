@@ -14,9 +14,9 @@ class DS18B20():
         device_folder = glob.glob(base_dir + '28*')[0]
         device_file = device_folder + '/w1_slave'
         self.file = device_file
-        self._send_config()
+        self.send_config()
 
-    def _send_config(self):
+    def send_config(self):
         conf = {
             "name": self.name,
             "state_topic": "homeassistant/sensor/" + self.device.name + "/" + self.uniq_id + "/state",
@@ -30,6 +30,7 @@ class DS18B20():
             "platform": "mqtt"
         }
         self.client.publish("homeassistant/sensor/" + self.device.name + "/" + self.uniq_id + "/config",json.dumps(conf), 0, True)
+        self.send_data()
     
     def send_data(self):
         self.client.publish("homeassistant/sensor/" + self.device.name + "/" + self.uniq_id + "/state", str(self._read_data()), 0, False)
