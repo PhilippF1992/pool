@@ -102,6 +102,7 @@ class Light:
         self._send_data_color(color_map.get(self.color, "Error"))
 
     def _send_data_color(self, color):
+        print("Color: " + color)
         self.client.publish(self.color_topic + "/state", str(color_map.get(color, "Error")), 0, False)
 
     def _send_config_brightness(self):
@@ -119,6 +120,7 @@ class Light:
         self._send_data_brightness(brightness_map.get(self.brightness, "Error"))
 
     def _send_data_brightness(self, brightness):
+        print("Brightness: " + brightness)
         self.client.publish(self.brightness_topic + "/state", str(brightness_map.get(brightness, "Error")), 0, False)
 
     def _send_config_speed(self):
@@ -136,6 +138,7 @@ class Light:
         self._send_data_speed(speed_map.get(self.speed, "Error"))
 
     def _send_data_speed(self, speed):
+        print("Speed: " + speed)
         self.client.publish(self.speed_topic + "/state", str(speed_map.get(speed, "Error")), 0, False)
 
     def _send_config_state(self):
@@ -154,9 +157,10 @@ class Light:
             "platform": "mqtt"
         }
         self.client.publish(self.state_topic + "/config",json.dumps(conf), 0, True)
-        self._send_data_state(False)
+        self._send_data_state(self.state)
 
     def _send_data_state(self, state):
+        print("State: " + state)
         self.client.publish(self.state_topic + "/state", str(state_map.get(state, "Error")), 0, False)
 
     def _set_state(self, state):
@@ -173,13 +177,13 @@ class Light:
         self.brightness = brightness
         self.send_command({"plum":brightness})
         self._send_data_brightness(brightness)
-        self.set_color(self.color)
+        self._set_color(self.color)
 
     def _set_speed(self, speed):
         self.speed = speed
         self.send_command({"pspd":speed})
         self._send_data_speed(speed)
-        self.set_color(self.color)
+        self._set_color(self.color)
 
     def subscribe(self):
         self.client.subscribe(self.state_topic + "/set")
@@ -202,7 +206,7 @@ class Light:
             self._set_color(new_color)
         if("brightness" in message.topic):
             new_brightness = self._translate_back(state_map, payload)
-            self.set_brightness(new_brightness)
+            self._set_brightness(new_brightness)
         if("speed" in message.topic):
             new_speed = self._translate_back(state_map, payload)
             self._set_state(new_speed)
