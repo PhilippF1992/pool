@@ -73,6 +73,10 @@ def on_connect(client, userdata, flags, rc):
 def on_disconnect(client, userdata, rc):
     connected = False
 
+def on_log(client, userdata, paho_log_level, message):
+    print(message)
+
+client.on_log = on_log
 client.on_message = on_message
 client.on_connect = on_connect
 client.on_disconnect = on_disconnect
