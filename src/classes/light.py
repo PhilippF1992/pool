@@ -202,11 +202,11 @@ class Light:
             new_state = self._translate_back(state_map, payload)
             self._set_state(new_state)
         if("color" in message.topic):
-            new_color = self._translate_back(state_map, payload)
+            new_color = self._translate_back(color_map, payload)
             self._set_color(new_color)
         if("brightness" in message.topic):
-            new_brightness = self._translate_back(state_map, payload)
+            new_brightness = self._translate_back(brightness_map, payload)
             self._set_brightness(new_brightness)
         if("speed" in message.topic):
-            new_speed = self._translate_back(state_map, payload)
+            new_speed = self._translate_back(speed_map, payload)
             self._set_state(new_speed)
