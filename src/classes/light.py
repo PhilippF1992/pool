@@ -90,7 +90,7 @@ class Light:
             "value_template": "{{ value }}",
             "unique_id": "color",
             "device": self.device,
-            "options": color_map.values(),
+            "options": list(color_map.values()),
             "platform": "mqtt"
         }
         self.client.publish(self.color_topic + "/config",json.dumps(conf), 0, True)
@@ -107,7 +107,7 @@ class Light:
             "value_template": "{{ value }}",
             "unique_id": "brightness",
             "device": self.device,
-            "options": brightness_map.values(),
+            "options": list(brightness_map.values()),
             "platform": "mqtt"
         }
         self.client.publish(self.brightness_topic + "/config",json.dumps(conf), 0, True)
@@ -124,7 +124,7 @@ class Light:
             "value_template": "{{ value }}",
             "unique_id": "speed",
             "device": self.device,
-            "options": speed_map.values(),
+            "options": list(speed_map.values()),
             "platform": "mqtt"
         }
         self.client.publish(self.speed_topic + "/config",json.dumps(conf), 0, True)
