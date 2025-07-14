@@ -5,7 +5,8 @@
 
 # Human readable name of the unit
 Description=Python Service to manage your pool via MQTT and HomeAssistant
-
+After=systemd-networkd-wait-online.service
+Wants=systemd-networkd-wait-online.service
 
 [Service]
 

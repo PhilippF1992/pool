@@ -105,6 +105,7 @@ Controlling your pool via Raspberry Pi, Python3, MQTT & HomeAssistant (auto-disc
         ```
 * Enable service to run at boot
     *   ```shell 
+        sudo systemctl enable systemd-networkd.service systemd-networkd-wait-online.service
         sudo systemctl enable python_pool.service
         ```
 * Restart RPI to run service
