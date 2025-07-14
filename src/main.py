@@ -62,7 +62,7 @@ def on_message(client, userdata, message):
     if (pump.uniq_id in message.topic):
         pump.on_message(message)
     if (light.uniq_id in message.topic):
-        pump.on_message(message)
+        light.on_message(message)
 
 def on_connect(client, userdata, flags, rc):
     cover.subscribe()

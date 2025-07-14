@@ -67,11 +67,14 @@ class Light:
         
     def get_current_state(self):
         response = self.send_tcp_message()
+        speed = int(response[70:71], 16) - 4
+        if speed < 0: 
+            self.speed = 0
+        else:
+            self.speed = speed 
         self.color = int(response[64:66], 16)
         self.brightness = int(response[71:72], 16) // 4
-        self.speed = int(response[70:71], 16) - 4
         self.state = int(response[33:34])
-        print("Current State")
 
 
     def send_command(self, command: dict):
@@ -83,7 +86,6 @@ class Light:
         self._send_config_speed()
         self._send_config_brightness()
         self._send_config_state()
-        print("Send configs")
 
     def _send_config_color(self):
         conf = {
@@ -184,7 +186,6 @@ class Light:
         self.client.subscribe(self.color_topic + "/select")
         self.client.subscribe(self.speed_topic + "/select")
         self.client.subscribe(self.brightness_topic + "/select")
-        print("Subscribe")
 
     def _translate_back(self,options, option):
         for key, value in options.items():
@@ -193,7 +194,6 @@ class Light:
 
     def on_message(self, message):
         payload=str(message.payload.decode("utf-8"))
-        print(payload)
         if("state" in message.topic):
             new_state = self._translate_back(state_map, payload)
             self.set_state(new_state)
@@ -206,4 +206,3 @@ class Light:
         if("speed" in message.topic):
             new_speed = self._translate_back(state_map, payload)
             self.set_state(new_speed)
-        print("On Message")
