@@ -39,8 +39,8 @@ speed_map = {
     2: "Fast"
 }
 state_map = {
-    0: "True",
-    2: "False"
+    0: "False",
+    2: "True"
 }
 
 class Light:
@@ -196,13 +196,13 @@ class Light:
         payload=str(message.payload.decode("utf-8"))
         if("state" in message.topic):
             new_state = self._translate_back(state_map, payload)
-            self.set_state(new_state)
+            self._set_state(new_state)
         if("color" in message.topic):
             new_color = self._translate_back(state_map, payload)
-            self.set_color(new_color)
+            self._set_color(new_color)
         if("brightness" in message.topic):
             new_brightness = self._translate_back(state_map, payload)
             self.set_brightness(new_brightness)
         if("speed" in message.topic):
             new_speed = self._translate_back(state_map, payload)
-            self.set_state(new_speed)
+            self._set_state(new_speed)
