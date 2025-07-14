@@ -198,7 +198,7 @@ class Light:
 
     def on_message(self, message):
         payload=str(message.payload.decode("utf-8"))
-        if("state" in message.topic):
+        if("state/" in message.topic):
             new_state = self._translate_back(state_map, payload)
             self._set_state(new_state)
         if("color" in message.topic):
