@@ -83,6 +83,7 @@ class Light:
         self._send_config_speed()
         self._send_config_brightness()
         self._send_config_state()
+        self._send_data_mqqt()
 
     def _send_config_color(self):
         conf = {
@@ -96,10 +97,8 @@ class Light:
             "platform": "mqtt"
         }
         self.client.publish(self.color_topic + "/config",json.dumps(conf), 0, True)
-        self._send_data_color(color_map.get(self.color, "Error"))
 
     def _send_data_color(self):
-        self.set_current_state()
         self.client.publish(self.color_topic + "/state", str(color_map.get(self.color, "Error")), 0, False)
 
     def _send_config_brightness(self):
@@ -114,10 +113,8 @@ class Light:
             "platform": "mqtt"
         }
         self.client.publish(self.brightness_topic + "/config",json.dumps(conf), 0, True)
-        self._send_data_brightness(brightness_map.get(self.brightness, "Error"))
 
     def _send_data_brightness(self):
-        self.set_current_state()
         self.client.publish(self.brightness_topic + "/state", str(brightness_map.get(self.brightness, "Error")), 0, False)
 
     def _send_config_speed(self):
@@ -132,10 +129,8 @@ class Light:
             "platform": "mqtt"
         }
         self.client.publish(self.speed_topic + "/config",json.dumps(conf), 0, True)
-        self._send_data_speed(speed_map.get(self.speed, "Error"))
 
     def _send_data_speed(self):
-        self.set_current_state()
         self.client.publish(self.speed_topic + "/state", str(speed_map.get(self.speed, "Error")), 0, False)
 
     def _send_config_state(self):
@@ -154,35 +149,41 @@ class Light:
             "platform": "mqtt"
         }
         self.client.publish(self.state_topic + "/config",json.dumps(conf), 0, True)
-        self._send_data_state()
 
     def _send_data_state(self):
-        self.set_current_state()
         self.client.publish(self.state_topic + "/state", str(state_map.get(self.state, "Error")), 0, False)
+
+    def _send_data_mqqt(self):
+        self.set_current_state()
+        self._send_data_state()
+        self._send_data_color()
+        self._send_data_brightness()
+        self._send_data_speed()
 
     def _set_state(self, state):
         self.send_command({"sprj":state})
-        self._send_data_state()
+        self._send_data_mqqt()
 
     def _set_color(self, color):
         self.send_command({"prcn":color})
-        self._send_data_color()
+        self._send_data_mqqt()
 
     def _set_brightness(self, brightness):
         self.send_command({"plum":brightness})
         self.send_command({"prcn":self.color})
-        self._send_data_brightness()
+        self._send_data_mqqt()
 
     def _set_speed(self, speed):
         self.send_command({"pspd":speed})
         self.send_command({"prcn":self.color})
-        self._send_data_speed()
+        self._send_data_mqqt()
 
     def subscribe(self):
         self.client.subscribe(self.state_topic + "/set")
         self.client.subscribe(self.color_topic + "/select")
         self.client.subscribe(self.speed_topic + "/select")
         self.client.subscribe(self.brightness_topic + "/select")
+        self._send_data_mqqt()
 
     def _translate_back(self,options, option):
         for key, value in options.items():
