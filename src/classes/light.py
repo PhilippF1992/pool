@@ -54,8 +54,6 @@ class Light:
         self.brightness_topic = "homeassistant/select/" + self.device.name + "_" + uniq_id + "/" + "brightness"
         self.speed_topic = "homeassistant/select/" + self.device.name + "_" + uniq_id + "/" + "speed"
         self.state_topic = "homeassistant/switch/" + self.device.name + "_" + uniq_id + "/" + "state"
-        self.set_current_state()
-        self.send_config()
 
     def send_tcp_message(self, message = ""):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
@@ -100,8 +98,9 @@ class Light:
         self.client.publish(self.color_topic + "/config",json.dumps(conf), 0, True)
         self._send_data_color(color_map.get(self.color, "Error"))
 
-    def _send_data_color(self, color):
-        self.client.publish(self.color_topic + "/state", str(color_map.get(color, "Error")), 0, False)
+    def _send_data_color(self):
+        self.set_current_state()
+        self.client.publish(self.color_topic + "/state", str(color_map.get(self.color, "Error")), 0, False)
 
     def _send_config_brightness(self):
         conf = {
@@ -117,8 +116,9 @@ class Light:
         self.client.publish(self.brightness_topic + "/config",json.dumps(conf), 0, True)
         self._send_data_brightness(brightness_map.get(self.brightness, "Error"))
 
-    def _send_data_brightness(self, brightness):
-        self.client.publish(self.brightness_topic + "/state", str(brightness_map.get(brightness, "Error")), 0, False)
+    def _send_data_brightness(self):
+        self.set_current_state()
+        self.client.publish(self.brightness_topic + "/state", str(brightness_map.get(self.brightness, "Error")), 0, False)
 
     def _send_config_speed(self):
         conf = {
@@ -134,8 +134,9 @@ class Light:
         self.client.publish(self.speed_topic + "/config",json.dumps(conf), 0, True)
         self._send_data_speed(speed_map.get(self.speed, "Error"))
 
-    def _send_data_speed(self, speed):
-        self.client.publish(self.speed_topic + "/state", str(speed_map.get(speed, "Error")), 0, False)
+    def _send_data_speed(self):
+        self.set_current_state()
+        self.client.publish(self.speed_topic + "/state", str(speed_map.get(self.speed, "Error")), 0, False)
 
     def _send_config_state(self):
         conf = {
@@ -153,32 +154,29 @@ class Light:
             "platform": "mqtt"
         }
         self.client.publish(self.state_topic + "/config",json.dumps(conf), 0, True)
-        self._send_data_state(self.state)
+        self._send_data_state()
 
-    def _send_data_state(self, state):
-        self.client.publish(self.state_topic + "/state", str(state_map.get(state, "Error")), 0, False)
+    def _send_data_state(self):
+        self.set_current_state()
+        self.client.publish(self.state_topic + "/state", str(state_map.get(self.state, "Error")), 0, False)
 
     def _set_state(self, state):
-        self.state = state
         self.send_command({"sprj":state})
-        self._send_data_state(state)
+        self._send_data_state()
 
     def _set_color(self, color):
-        self.color = color
         self.send_command({"prcn":color})
-        self._send_data_color(color)
+        self._send_data_color()
 
     def _set_brightness(self, brightness):
-        self.brightness = brightness
         self.send_command({"plum":brightness})
-        self._send_data_brightness(brightness)
-        self._set_color(self.color)
+        self.send_command({"prcn":self.color})
+        self._send_data_brightness()
 
     def _set_speed(self, speed):
-        self.speed = speed
         self.send_command({"pspd":speed})
-        self._send_data_speed(speed)
-        self._set_color(self.color)
+        self.send_command({"prcn":self.color})
+        self._send_data_speed()
 
     def subscribe(self):
         self.client.subscribe(self.state_topic + "/set")
