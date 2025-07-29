@@ -12,7 +12,7 @@ Wants=systemd-networkd-wait-online.service
 
 # Command to execute when the service is started
 # Add args as required
-ExecStart=/usr/bin/python3 /usr/local/lib/pool/src/main.py --mqttpw Anja050518!
+ExecStart=/bin/bash -c '/usr/bin/python3 /usr/local/lib/pool/src/main.py -mqttpw && exit 7'
 
 # Disable Python's buffering of STDOUT and STDERR, so that output from the
 # service shows up immediately in systemd's logs
